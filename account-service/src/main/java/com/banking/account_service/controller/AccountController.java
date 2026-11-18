@@ -48,4 +48,32 @@ public class AccountController {
 
 
 
+    /**
+     * step 1
+     * Called by Transaction Service when transfer is initiated
+     */
+    @PutMapping("/{accountNumber}/deduct")
+    public ResponseEntity<String> deductBalance(
+            @PathVariable String accountNumber,
+            @RequestParam BigDecimal amount) {
+        accountService.deductBalance(accountNumber, amount);
+        return ResponseEntity.ok("Balance deducted successfully");
+    }
+
+    /**
+     * SAGA STEP - Compensating transaction endpoint
+     * CALLED BY TRANSACTION SERVICE in TWO SCENARIOS:
+     * 1. Fraud detected -> refund sender (undo step 1)
+     * 2. Transaction completed -> Credit receiver
+     */
+    @PutMapping("/{accountNumber}/credit")
+    public ResponseEntity<String> creditBalance(
+            @PathVariable String accountNumber,
+            @RequestParam BigDecimal amount) {
+        accountService.creditBalance(accountNumber, amount);
+        return ResponseEntity.ok("BALANCE CREDITED SUCCESSFULLY");
+    }
+
+
+
 }
