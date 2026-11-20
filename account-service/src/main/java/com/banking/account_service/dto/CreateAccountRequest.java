@@ -2,10 +2,13 @@ package com.banking.account_service.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
 
 @Data
 @AllArgsConstructor
@@ -27,9 +30,9 @@ public class CreateAccountRequest {
     private String accountType;
 
 
-    @NotBlank(message ="Initial Deposit name is required")
-    @Positive(message ="initial Deposit must be positive")
-    private String initialDeposit;
+    @NotNull(message = "Initial Deposit is required")
+    @Positive(message = "Initial Deposit must be positive")
+    private BigDecimal initialDeposit;
 
 
 
